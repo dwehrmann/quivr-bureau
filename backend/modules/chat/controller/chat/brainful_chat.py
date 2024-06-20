@@ -48,7 +48,7 @@ integration_list = {
     "proxy": ProxyBrain,
     "self": SelfBrain,
     "multi-contract": MultiContractBrain,
-    "cswriter": CSWriter,
+    "cswriter": CSWriter
 }
 
 brain_service = BrainService()
