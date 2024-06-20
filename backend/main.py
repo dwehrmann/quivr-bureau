@@ -1,15 +1,9 @@
-import os
-
-if __name__ == "__main__":
-    # import needed here when running main.py to debug backend
-    # you will need to run pip install python-dotenv
-    from dotenv import load_dotenv  # type: ignore
-
-    load_dotenv()
 import logging
+import os
 
 import litellm
 import sentry_sdk
+from dotenv import load_dotenv  # type: ignore
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from logger import get_logger
@@ -24,6 +18,7 @@ from modules.knowledge.controller import knowledge_router
 from modules.misc.controller import misc_router
 from modules.onboarding.controller import onboarding_router
 from modules.prompt.controller import prompt_router
+from modules.sync.controller import sync_router
 from modules.upload.controller import upload_router
 from modules.user.controller import user_router
 from packages.utils import handle_request_validation_error
@@ -33,6 +28,8 @@ from routes.crawl_routes import crawl_router
 from routes.subscription_routes import subscription_router
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from sentry_sdk.integrations.starlette import StarletteIntegration
+
+load_dotenv()
 
 # Set the logging level for all loggers to WARNING
 logging.basicConfig(level=logging.INFO)
@@ -78,6 +75,7 @@ app.include_router(brain_router)
 app.include_router(chat_router)
 app.include_router(crawl_router)
 app.include_router(assistant_router)
+app.include_router(sync_router)
 app.include_router(onboarding_router)
 app.include_router(misc_router)
 app.include_router(analytics_router)

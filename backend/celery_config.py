@@ -1,7 +1,10 @@
 # celery_config.py
 import os
 
+import dotenv
 from celery import Celery
+
+dotenv.load_dotenv()
 
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "")
 CELERY_BROKER_QUEUE_NAME = os.getenv("CELERY_BROKER_QUEUE_NAME", "quivr")
@@ -36,3 +39,6 @@ elif CELERY_BROKER_URL.startswith("redis"):
     )
 else:
     raise ValueError(f"Unsupported broker URL: {CELERY_BROKER_URL}")
+
+
+celery.autodiscover_tasks(["modules.sync", "modules", "middlewares", "packages"])
